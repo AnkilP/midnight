@@ -28,7 +28,7 @@ func init() {
 func connect(user *proto.User) error {
 	var streamerror error
 
-	stream, err := client.CreateStream(context.Background(), &proto.Connect{
+	stream, err := client.RecvMessages(context.Background(), &proto.Connect{
 		User:   user,
 		Active: true,
 	})
@@ -90,7 +90,7 @@ func main() {
 				Timestamp: timestamp.String(),
 			}
 
-			_, err := client.BroadcastMessage(context.Background(), msg)
+			_, err := client.SendMessage(context.Background(), msg)
 			if err != nil {
 				fmt.Printf("Error Sending Message: %v", err)
 				break

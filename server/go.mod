@@ -1,4 +1,4 @@
-module docker_container
+module midnight
 
 go 1.13
 
