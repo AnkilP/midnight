@@ -5,8 +5,9 @@ import (
 	"crypto/sha256"
 	"flag"
 	"fmt"
-	"midnight/proto"
 	"os"
+
+	"github.com/AnkilP/midnight/proto"
 
 	"encoding/hex"
 	"log"
