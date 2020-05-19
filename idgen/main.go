@@ -6,7 +6,11 @@ import (
 	"os"
 	"sync"
 
+	"github.com/AnkilP/midnight/idgen_proto"
 	"github.com/AnkilP/midnight/proto"
+
+	guuid "github.com/google/uuid"
+
 	context "golang.org/x/net/context"
 	grpc "google.golang.org/grpc"
 	glog "google.golang.org/grpc/grpclog"
@@ -19,30 +23,21 @@ func init() {
 }
 
 type Connection struct {
-	stream proto.Broadcast_RecvMessagesServer
+	stream idgen_proto.Broadcast_RecvMessagesServer
 	id     string
 	active bool
 	error  chan error
 }
 
-type Server struct {
+type ID_GEN struct {
 	Connection []*Connection
 }
 
-func (s *Server) RecvMessages(pconn *proto.Connect, stream proto.Broadcast_RecvMessagesServer) error {
-	conn := &Connection{
-		stream: stream,
-		id:     pconn.User.Id,
-		active: true,
-		error:  make(chan error),
-	}
-
-	s.Connection = append(s.Connection, conn)
-
-	return <-conn.error
+func genUUID() int {
+	id := guuid.New()
 }
 
-func (s *Server) SendMessage(ctx context.Context, msg *proto.Message) (*proto.Close, error) {
+func (s *ID_GEN) idrequestserve(ctx context.Context, msg *idgen_proto.Close) (*proto.Close, error) {
 	wait := sync.WaitGroup{}
 	done := make(chan int)
 

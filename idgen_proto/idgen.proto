@@ -2,17 +2,12 @@ syntax = "proto3";
 
 package idgen_proto;
 
-import "google/protobuf/timestamp.proto";
-
-message idrequest {
-    google.protobuf.Timestamp timestamp = 1;
-    string computer_name = 2;
-}
-
 message idresponse {
-    string guid = 1;
+    string uuid = 1;
 }
+
+message Close {}
 
 service Broadcast {
-  rpc idrequestserve(idrequest) returns (idresponse);
+  rpc idrequestserve(Close) returns (idresponse);
 }
